@@ -13,7 +13,7 @@ class CalculateImpl(private val activity: CalculatorInterface) {
 
     private var result: Double = 0.0
 
-    fun resetData() {
+    private fun resetData() {
         result = 0.0
         recentOperation = "+"
     }
@@ -59,6 +59,11 @@ class CalculateImpl(private val activity: CalculatorInterface) {
     }
 
     private fun flush(s: String) {
+        if (s.endsWith(".")) {
+            activity.showNewNumber(s)
+            return
+        }
+
         activity.showNewNumber(s.trimPoint())
     }
 

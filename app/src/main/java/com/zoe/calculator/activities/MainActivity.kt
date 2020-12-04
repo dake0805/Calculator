@@ -1,8 +1,8 @@
 package com.zoe.calculator.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.zoe.calculator.R
 import com.zoe.calculator.helpers.CalculateImpl
 import com.zoe.calculator.helpers.CalculatorInterface
@@ -23,12 +23,27 @@ class MainActivity : AppCompatActivity(), CalculatorInterface {
         val numberButtons =
             listOf<Button>(btn_decimal, btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9)
 
+
+        randomNumber(numberButtons)
+
+
         operationsButtons.setButtonListenerByText(calculate::handleOperation)
         numberButtons.setButtonListenerByText(calculate::handleNum)
 
         btn_equals.setOnClickListener { calculate.handleEqual() }
         btn_clear.setOnClickListener { calculate.handleClear() }
 
+    }
+
+
+    private fun randomNumber(numbers: List<Button>) {
+        val textOnButton: MutableList<CharSequence> = mutableListOf()
+        numbers.mapTo(textOnButton) { button -> button.text }
+        numbers.forEach {
+            val r = textOnButton.random()
+            it.text = r
+            textOnButton -= r
+        }
     }
 
 
