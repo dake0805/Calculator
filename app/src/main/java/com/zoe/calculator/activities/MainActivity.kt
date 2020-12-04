@@ -19,11 +19,15 @@ class MainActivity : AppCompatActivity(), CalculatorInterface {
         calculate = CalculateImpl(this)
 
 
-        val operationsButtons = listOf<Button>(btn_plus, btn_minus, btn_multiply, btn_divide, btn_equals)
-        val numberButtons = listOf<Button>(btn_decimal, btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9)
+        val operationsButtons = listOf<Button>(btn_plus, btn_minus, btn_multiply, btn_divide)
+        val numberButtons =
+            listOf<Button>(btn_decimal, btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9)
 
         operationsButtons.setButtonListenerByText(calculate::handleOperation)
         numberButtons.setButtonListenerByText(calculate::handleNum)
+
+        btn_equals.setOnClickListener { calculate.handleEqual() }
+        btn_clear.setOnClickListener { calculate.handleClear() }
 
     }
 

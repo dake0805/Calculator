@@ -13,19 +13,31 @@ class CalculateImpl(private val activity: CalculatorInterface) {
 
     private var result: Double = 0.0
 
-    private val operations = listOf("+", "-", "*", "/", "^", "%", "√")
+    fun resetData() {
+        result = 0.0
+        recentOperation = "+"
+    }
 
     fun handleOperation(operation: String) {
         calculateAndFlush()
-        if (operation in operations) {
-            recentOperation = operation
-        }
+        recentOperation = operation
     }
 
 
     fun handleNum(number: String) {
         inputDisplay = inputDisplay.trimStart { it == '0' }
         inputDisplay += number
+        flush(inputDisplay)
+    }
+
+    fun handleEqual() {
+        calculateAndFlush()
+        resetData()
+    }
+
+    fun handleClear() {
+        resetData()
+        inputDisplay = "0"
         flush(inputDisplay)
     }
 
@@ -47,10 +59,10 @@ class CalculateImpl(private val activity: CalculatorInterface) {
     }
 
     private fun flush(s: String) {
-        activity.showNewNumber(s.trimZero())
+        activity.showNewNumber(s.trimPoint())
     }
 
-    private fun String.trimZero(): String {
+    private fun String.trimPoint(): String {
         if (this.toDouble().toInt().toDouble() == this.toDouble()) {
             return this.toDouble().toInt().toString()
         }
